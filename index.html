@@ -1,0 +1,184 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<link href="https://fonts.cdnfonts.com/css/chalkduster" rel="stylesheet">
+<style>
+    @import url('https://fonts.cdnfonts.com/css/chalkduster');
+</style>
+<script src="./teaser-data.js"></script>
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Radiance Field Learners As UAV First-Person Viewers</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <meta name="description"
+        content="Project page for &#39;Radiance Field Learners As UAV First-Person Viewers.&#39;">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+
+    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Radiance Field Learners As UAV First-Person Viewers</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <meta name="description"
+        content="Project page for &#39;Radiance Field Learners As UAV First-Person Viewers.&#39;">
+</head>
+
+<body>
+    <p class="title">Radiance Field Learners As UAV First-Person Viewers</p>
+    <div class="container">
+        <table width="1000" border="0" align="center">
+            <tbody>
+                <tr>
+                    <div style="text-align: center">
+                        <img class="img" src="./figs/introduction.png" alt="" width="550" style="margin: auto"/>
+                    </div>
+                </tr>
+                <tr> <br /> </tr>
+                <tr align="center"></tr>
+            </tbody>
+        </table>
+
+        &nbsp;
+    <div class="content">
+        <h2>Abstract</h2>
+        <p> First-Person-View (FPV) holds immense potential for revolutionizing the trajectory of Unmanned Aerial Vehicles (UAVs), offering an exhilarating avenue for navigating complex building structures. Yet, traditional Neural Radiance Field (NeRF) methods face challenges such as sampling single points per iteration and requiring an extensive array of views for supervision.  UAV videos exacerbate these issues with limited viewpoints and significant spatial scale variations, resulting in inadequate detail rendering across diverse scales. In response, we introduce FPV-NeRF, addressing these challenges through three key facets: (1) temporal consistency. Leveraging spatio-temporal continuity ensures seamless coherence between frames; (2) global structure. Incorporating various global features during point sampling preserves space integrity; (3) local granularity. Employing a comprehensive framework and multi-resolution supervision for multi-scale scene feature representation tackles the intricacies of UAV video spatial scales. Additionally, due to the scarcity of publicly available FPV videos, we introduce an innovative view synthesis method using NeRF to generate FPV perspectives from UAV footage, enhancing spatial perception for drones. Our novel dataset spans diverse trajectories, from outdoor to indoor environments, in the UAV domain, differing significantly from traditional NeRF scenarios. Through extensive experiments encompassing both interior and exterior building structures, FPV-NeRF demonstrates a superior understanding of the UAV flying space, outperforming state-of-the-art methods in our curated UAV dataset. Explore our project page for further insights. </p>
+        &nbsp;
+    </div>
+
+    <div class="content">
+        <h2>Approach</h2>
+        <p>FPV-NeRF embodies several appealing qualities: <b>First</b>, it achieves improved <b><i>temporal consistency</i></b>. The robust correlation timing mechanism and spatial coherence between adjacent frames in video sequences empower FPV-NeRF to construct a more continuous and smooth overall structure. <b>Second</b>, it enhances the integrity of the <b><i>global structure</i></b>. Through the thoughtful design of cross-attention between different resolutions and the acquisition of a volume feature, the training of each point's feature considers the context of surrounding points, mitigating the risk of overlooking low contextual elements. <b>Third</b>, it excels in providing <b><i>local granularity</i></b>. The subdivision of space into regions with distinct warping functions, coupled with the transformation of coordinate positions of sampling points into high-dimensional features, including high-frequency components, ensures the high-fidelity restoration of local details.</p>
+        &nbsp;
+        <div style="text-align: center">
+            <img src="./figs/approach.png" alt="" width="850" style="margin: auto" />
+        </div>
+        &nbsp;
+        <p>Our proposed method includes: <strong>I)</strong> Multi-scale camera space estimation, focusing on trajectory reconstruction using adjacent time frames to model environmental space. The trajectory space undergoes division, applying distinct coordinate distortion functions based on the UAV's position and pose in adjacent frames. <b>II)</b> First-person view video generation with a global-local scene encoder: <strong>i)</strong> a learnable volume embedding indicating general features of each block; <strong>ii)</strong> a point location embedding providing continuous features based on position, enhancing multi-scale encoding with various frequency components; <strong>iii)</strong> a level embedding offering global features for resolution rendering and cross-attention between levels. <strong>III)</strong> For training, we propose a comprehensive loss function with three terms, incorporating Optimal Transport for disparity alignment and bounded variation for smoothness consistency among neighboring regions. </p>
+    </div>
+
+    <div class="content">
+        <h2>Datasets</h2>
+        <p>We construct a new benchmark for 3D reconstruction on UAV videos (called the <b>UAV dataset</b>). The UAV dataset is captured by DJI drone, contains ten unbounded scenes, including sky, grassland and a lot of buildings. Each scene is captured by a UAV, which first flies around the building in the sky, and then lands and moves into the building through the door.  </p>
+                    <div id="imageCarousel2" class="carousel slide teaser-carousel" data-ride="carousel" data-interval="5000">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div>
+                                    <video id="video_2" width="600" controls autoplay loop> <source src="figs/02_1.mp4" type="video/mp4"> </video>
+                                </div>
+                            </div>
+
+                            <div class="carousel-item">
+                                <div>
+                                    <video id="video_6" width="600" controls autoplay loop> <source src="figs/06_1.mp4" type="video/mp4"> </video>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <a class="carousel-control-prev" href="#imageCarousel2" role="button" data-slide="prev">
+                            <div class="slider-navigation-previous">
+                                <svg viewBox="0 0 50 80" xml:space="preserve">
+                                    <polyline fill="white" stroke-width=".5em" stroke-linecap="round"
+                                        stroke-linejoin="round" points="45.63,75.8 0.375,38.087 45.63,0.375 ">
+                                    </polyline>
+                                </svg>
+                            </div>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#imageCarousel2" role="button" data-slide="next">
+                            <div class="slider-navigation-next">
+                                <svg viewBox="0 0 50 80" xml:space="preserve">
+                                    <polyline fill="white" stroke-width=".5em" stroke-linecap="round"
+                                        stroke-linejoin="round" points="0.375,0.375 45.63,38.087 0.375,75.8 ">
+                                    </polyline>
+                                </svg>
+                            </div>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+    </div>
+
+    
+
+    <div class="content">
+        <h2>Results</h2>
+        <p> Qualification results compared with previous SOTA methods on the proposed UAV dataset. the synthesized frames of DVGO is blurred due to their limited resolutions to represent such a long trajectory, the results of Mip-NeRF 360 and F2-NeRF look shaper but have local noise and distortion due to its unbalanced scene space organization. In comparison, our FPV-NeRF takes advantage of the adaptive space subdivision and considers scene features in different scale to fully exploit the global-local representation capacity. </p>
+        <div style="text-align: center">
+            <img src="./figs/results.png" alt="" width="850" style="margin: auto" />
+        </div>
+    </div>
+
+    <div class="content">
+        <h2>First-Person-View Trajectory</h2>
+        <p>During testing, we input a novel auto-generated point position sequence into this pipeline and can finally obtain a novel first-person view video:  </p>
+        &nbsp;
+        <div style="text-align: center">
+            <img src="./figs/camera_poses.png" alt="" width="550" style="margin: auto" />
+        </div>
+    </div>
+
+    <div class="content">
+        <h2>Conclusion</h2>
+        <p>In sum, FPV-NeRF revolutionizes drone spatial perception with a novel NeRF-based approach. It conquers UAV video reconstruction challenges through multi-scale camera estimation, global-local scene encoding, and a robust learning objective. Rigorous experiments showcase FPV-NeRF's superiority, outperforming benchmarks in our carefully curated UAV dataset across diverse trajectories.</p>
+    </div>
+
+    <!-- <div class="content">
+        <h2>Social Impact</h2>
+        <p>This work introduces DVP as a neuro-symbolic framework for image translation, showing robust image translation, strong in-context reasoning and straightforward controllability and explainability. On positive side, our framework reaches superior image translation performance qualitatively and quantitatively, and provide a user-centric design for the integration of future ad- vanced modules. DVP holds significant merit, particularly in applications pertinent to safety-critical domains and industrial deployments. For potential negative social impact, our DVP struggles in handling obscured objects and photometric conditions, which are common limitations of almost all concurrent diffusion models. Hence its utility should be further examined.</p>
+    </div> -->
+
+
+</body>
+
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-WLX2Z5QLG8');
+ </script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ <script type="text/javascript">
+    $(document).ready(function () {
+
+        if (localStorage.getItem("my_app_name_here-quote-scroll") != null) {
+            $(window).scrollTop(localStorage.getItem("my_app_name_here-quote-scroll"));
+        }
+
+        $(window).on("scroll", function() {
+            localStorage.setItem("my_app_name_here-quote-scroll", $(window).scrollTop());
+        });
+
+      });
+ </script>
+
+ <script>
+    function prompt_on(prompt_element) {
+        prompt_element.classList.add("caption-active");
+    }
+
+    function prompt_off(prompt_element) {
+        prompt_element.classList.remove("caption-active");
+    }
+
+    function toggle_prompt(active_prompt_id, inactive_prompt_ids, result_id) {
+        let active_prompt = document.getElementById(active_prompt_id);
+        prompt_on(active_prompt);
+        for (let i = 0; i < inactive_prompt_ids.length; i++) {
+            let inactive_prompt = document.getElementById(inactive_prompt_ids[i]);
+            prompt_off(inactive_prompt);
+        }
+
+        let result = document.getElementById(result_id);
+        result.src = file_paths[active_prompt_id];
+    }
+ </script>
+
+ <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+ <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</html>
