@@ -177,11 +177,11 @@ code {
 }
 
 .carousel-control-prev {
- margin-left: -50px;
+ margin-left: -70px;
  height: 300px;
  }
  .carousel-control-next {
- margin-right: -50px;
+ margin-right: -70px;
  height: 300px;
  }
  .carousel-item {
@@ -232,7 +232,7 @@ code {
  }
 
  .teaser-carousel {
-    width: 670px;
+    width: 780px;
     margin: auto;
     height: 400px;
  }
